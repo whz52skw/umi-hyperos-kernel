@@ -1,0 +1,49 @@
+name: Bug report
+description: 报告一个问题（请务必附日志）
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈。没有日志的问题很难定位，请尽量把下面每一项都填上。
+  - type: input
+    id: device
+    attributes:
+      label: 设备与系统
+      placeholder: Mi 10 (umi) / HyperOS 1.0.7.0.TJBCNXM / Android 13
+    validations:
+      required: true
+  - type: input
+    id: kernel
+    attributes:
+      label: 内核版本
+      description: `adb shell uname -a` 的输出
+      placeholder: 4.19.325-20261116-3ebb6338-perf+
+    validations:
+      required: true
+  - type: input
+    id: manager
+    attributes:
+      label: 管理器版本
+      placeholder: SukiSU Nova v3.0.0 (30000-6)
+  - type: textarea
+    id: what
+    attributes:
+      label: 现象
+      description: 做了什么、期望什么、实际什么
+    validations:
+      required: true
+  - type: textarea
+    id: ksu_log
+    attributes:
+      label: 内核日志里的 KSU 行
+      description: 从 bugreport 的 dmesg 里 grep KernelSU
+      render: shell
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: 自查
+      options:
+        - label: 已确认刷入的是 `Kernel_MIUI_umi_*.zip`
+          required: true
+        - label: 已尝试回滚到上一版内核确认问题是否复现

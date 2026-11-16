@@ -1,0 +1,10 @@
+# 构建产物与本地垃圾
+*.zip
+*.img
+*.log
+out/
+anykernel/
+modules/
+proton-clang/
+.DS_Store
+Thumbs.db
