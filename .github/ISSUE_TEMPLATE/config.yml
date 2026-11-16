@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 先看常见问题
+    url: https://github.com/whz52skw/umi-hyperos-kernel/blob/main/docs/FAQ.md
+    about: 卡米、回滚、授权方式等问题先看这里
+  - name: 看排错记录
+    url: https://github.com/whz52skw/umi-hyperos-kernel/blob/main/docs/DIAGNOSIS.md
+    about: 10 个已知坑的完整记录
