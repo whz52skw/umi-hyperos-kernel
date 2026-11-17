@@ -1,1 +1,0 @@
-{"ref":"main","inputs":{"ksu_ref":"builtin","hook_mode":"auto","hook_patch":"postexec","kprobe_mode":"off","susfs_mode":"off","kpm_mode":"off","variant":"miui","kpm_patch":"0.12.0"}}
