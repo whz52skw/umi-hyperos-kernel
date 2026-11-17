@@ -510,6 +510,45 @@ jobs:
 
           PY
           grep -n "feature req id=" KernelSU/kernel/policy/feature.c || true
+      - name: 8o. feature 10003 可调 + 未匹配 ioctl 建日志
+        id: s8o
+        if: env.HOOK_PATCH == 'postexec'
+        working-directory: kernel
+        run: |
+          set -ex
+          python3 - <<'PY'
+          f = "KernelSU/kernel/policy/feature.c"
+          c = open(f).read()
+
+          # 1) 可调参数：让 10003 的返回值能通过 sysfs 动态修改，不用反复重编
+          if "ksu_f10003" not in c:
+              head = "static const struct ksu_feature_handler *feature_handlers[KSU_FEATURE_MAX];"
+              decl = "int ksu_f10003 = 1;\nmodule_param(ksu_f10003, int, 0644);\n\n"
+              c = c.replace(head, decl + head, 1)
+              c = c.replace("            *value = 1;\n        if (supported)", "            *value = (u64)ksu_f10003;\n        if (supported)", 1)
+              open(f, "w").write(c)
+              print("param added")
+          else:
+              print("param exists")
+
+          # 2) 未匹配的 ioctl 也打日志（原来被 ratelimit 吞了）
+          g = "KernelSU/kernel/supercall/dispatch.c"
+          d = open(g).read()
+          if "unsupported command 0x%x uid=%d" not in d:
+              old = "    pr_warn_ratelimited(\"ksu ioctl: unsupported command 0x%x\\n\", cmd);"
+              new = "    pr_info(\"ksu ioctl: unsupported command 0x%x uid=%d\\n\", cmd, current_uid().val);"
+              if old in d:
+                  d = d.replace(old, new, 1)
+                  open(g, "w").write(d)
+                  print("unmatched log patched")
+              else:
+                  print("unmatched anchor missing")
+          else:
+              print("unmatched log exists")
+
+          PY
+          grep -n 'ksu_f10003' KernelSU/kernel/policy/feature.c || true
+          grep -n 'unsupported command 0x%x uid' KernelSU/kernel/supercall/dispatch.c || true
       - name: 8f. ccache 缓存
         uses: actions/cache@v4
         with:
@@ -603,6 +642,7 @@ jobs:
           echo "8l reload       : ${{ steps.s8l.outcome }}"
           echo "8m text uids    : ${{ steps.s8m.outcome }}"
           echo "8n feat log     : ${{ steps.s8n.outcome }}"
+          echo "8o tune 10003   : ${{ steps.s8o.outcome }}"
           echo "9a build       : ${{ steps.build_a.outcome }}"
           echo "============================================="
           exit 0
