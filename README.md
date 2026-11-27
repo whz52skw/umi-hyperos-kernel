@@ -8,6 +8,26 @@
 
 ---
 
+## ⚠️ 重要：管理器的版本配套
+
+| 内核 | 必须配的管理器 | 状态 |
+|---|---|---|
+| 本仓库（builtin 4.19, 内核侧 30000） | **SukiSU Nova v3.0.0 `_30000`** | ✅ |
+| 官方新源里的 v3.0.0 (35000) / manager-ci (35106) | ❌ **不能用**（属于 main 树/LKM 新协议） | 装上会提示"需要更新内核" |
+
+官方下载源从 GitHub Releases 迁到了自建实例：
+`https://git.zako.shirkneko.top:20004/shirkneko/SukiSU/releases`，那里现在只有 **35000 系列 APK**——那是给 main 树（GKI/LKM）设备用的，**builtin 30000 内核不能装**。
+
+30000 APK 的备份方式（手机有 root、连上 adb 后）：
+
+```powershell
+adb shell pm path com.sukisu.nova   # 得到 /data/app/.../base.apk
+adb pull <上面得到的路径> SukiSU_Nova_v3.0.0_30000-release.apk
+```
+
+装回 30000 的官方安装包？安装前先卸载/降级 35000，否则系统不让降级安装。如果你手机上已经装了 35000 且能开机，先 `adb shell pm uninstall com.sukisu.nova` 再装 30000。
+
+
 ## 1. 设备与环境
 
 | 项 | 值 |

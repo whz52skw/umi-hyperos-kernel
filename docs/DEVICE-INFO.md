@@ -37,3 +37,10 @@ KernelSU: load_allow_list open file failed: -13
 KernelSU: ksu ioctl: cmd=0xc0004b0b uid=10299 ret=-2
 KernelSU: ksu: feature req id=10003
 ```
+
+## 官方发布源变迁（2026-11-28 记录）
+
+- 官方安装指南的"下载管理器"改指向自建实例：`https://git.zako.shirkneko.top:20004/shirkneko/SukiSU/releases`
+- 该源只有 35000 系列 APK（main 树协议），**builtin 30000 内核不可用**
+- GitHub Releases 同款 35000（分 ABI 打包）
+- 本项目配套版本：`SukiSU_Nova_v3.0.0_30000-release.apk`（从手机提取备份）

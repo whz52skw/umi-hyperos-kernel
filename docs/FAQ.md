@@ -40,3 +40,12 @@ KSU 模块机制与 Magisk 兼容，大部分模块可以直接用；但涉及 `
 
 当前只验证 **Mi 10 (umi)**。同 SoC 的 cmi / cas / lmi / thyme / apollo 理论可复用，
 但需要各自的 defconfig 与面板参数，未验证。
+## 官方把管理器更新到 35000 了，我能升级吗
+
+**不能**。官方新源（git.zako.shirkneko.top:20004）里的 v3.0.0 _35000 / manager-ci _35106
+对应 **main 树（LKM/GKI）新协议**，我们 builtin 4.19 内核侧版本是 `30000`，装 35000 会直接提示「需要更新内核」。
+
+- 保持 30000 管理器 + 30000 内核
+- 如果已经误装 35000：`adb shell pm uninstall com.sukisu.nova` 后重装 30000
+- 30000 APK 备份：`adb shell pm path com.sukisu.nova` → `adb pull`
+
