@@ -1,0 +1,18 @@
+## ⛔ 项目无期限停更（2026-11-28）
+
+仓库转为交接档案。全部进度、卡点、下一步、流程图见：docs/HANDOVER.md、docs/FLOW.md、docs/ROADMAP.md。
+
+## 📦 本包内容：绝版配套管理器备份
+
+本项目内核（SukiSU Nova builtin 30000）**只能配 30000 系列管理器**。官方已将发行版升到 35000/35106（main 树协议），**此 30000 APK 官方渠道已绝版**，原维护者在此备份，供接手者使用。
+
+### 文件 1：SukiSU_Nova_v3.0.0_30000-release.apk
+- 22,621,663 字节
+- SHA-256: 1F2B7A62D80A9DD0FCA2EB5534611CB053D836B8479647B6F71D8D3AD5CC0049
+
+### 文件 2：SukiSU_v3.2.0.apk
+- 15,553,290 字节
+- SHA-256: B3FBF01953862FD7E41B3A164C5E5E7D06684E36F211963DF03CCEE794DF4604
+- 说明：旧版 SukiSU 管理器，配套作者预编译 SUSFS 内核（另见 README）
+
+> 验证：`certutil -hashfile <文件> SHA256`

@@ -7,7 +7,8 @@
 - [ ] 刷机，确认 `adb shell su -c id` = uid=0，root 链路活着
 - [ ] 用 `tools/diagnostics.ps1` 出一份诊断包，留作基线
 
-## P0：管理器 UI 授权（两个尾巴之一）
+## P0：管理器 UI 授权（两个尾巴之一）⭐ 原维护者指定主攻
+> 原维护者不希望以白名单收尾（体验差），UI 授权是最终目标；白名单仅作兜底。
 - [ ] 静态：JADX 反编译 `SukiSU_Nova_v3.0.0_30000-release.apk`（Release v0.2.0-archive 有），定位 `10003` 与 `SET_APP_PROFILE` 守卫逻辑
 - [ ] 动态：`/sys/module/kernelsu/parameters/ksu_f10003` 遍历 1/2/3/2147483647，每档点一次授权
 - [ ] 看 strace：点授权时管理器到底有没有发 ioctl
