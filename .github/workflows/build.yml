@@ -595,6 +595,24 @@ jobs:
             echo "  ksu  : $(strings /tmp/img.bin | grep -m1 "SukiSU-Nova" || true)"
           done
 
+      - name: 10b. 内核符号自检（先验后刷）
+        if: always()
+        working-directory: kernel
+        run: |
+          set -ex
+          echo "===== System.map 关键符号 ====="
+          for s in ksu_load_uid_text_file ksu_allowlist_reload ksu_f10003 ksu_compat_feature_10003; do
+            if grep -q " $s$" out/System.map 2>/dev/null; then
+              echo "  OK  $s"
+            else
+              echo "  ??  $s  <- 缺失"
+            fi
+          done
+          echo "===== vmlinux 字符串 ====="
+          strings out/vmlinux 2>/dev/null | grep -m1 "ksu_uids.txt" && echo "  OK  ksu_uids.txt 已烧入" || echo "  ??  ksu_uids.txt 未烧入"
+          echo "===== 拷贝到产物 ====="
+          cp out/vmlinux out/System.map ../artifacts/ 2>/dev/null || echo "[warn] vmlinux/System.map 拷贝失败(可能没找到)"
+
       - name: 11. 收集产物
         if: always()
         working-directory: kernel
