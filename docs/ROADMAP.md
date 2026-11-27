@@ -1,28 +1,31 @@
-# 路线图（欢迎认领）
+# 路线图（接手者版）
 
-## P0 让 UI 授权可用
-- [ ] 抓全管理器请求的 feature id（已加日志 `ksu: feature req id=`）
-- [ ] 逐个补特性桩，确认管理器是否继续发送 `SET_APP_PROFILE`
-- [ ] 如果没有发送：比对 main 树的 supercall 协议，补齐缺失 ioctl
-- 需要技能：KernelSU 源码、Kotlin（读管理器侧逻辑）
+> ⛔ 原维护者已停更。以下任务按"接手后可立即开始"排序。
 
-## P1 白名单可用
-- [ ] 把 `ksu_uids.txt` 路径迁到 `/data/adb/ksu/`，处理 SELinux（`override_creds` / 目录标签）
-- [ ] 验证热加载：改文件 → 管理器刷新 → 立即生效
-- 需要技能：Linux/SELinux、内核文件 IO
+## 第 0 步：复现环境（必做）
+- [ ] 跑一次 Actions 编译（31 步 workflow），确认产出 zip
+- [ ] 刷机，确认 `adb shell su -c id` = uid=0，root 链路活着
+- [ ] 用 `tools/diagnostics.ps1` 出一份诊断包，留作基线
 
-## P2 SUSFS 2.x 移植到 4.19
-- [ ] 参考 `susfs4ksu` 的 3.10 移植与 main 树用法
-- [ ] 移植 fs 钩子：namespace/umount、kstat、readdir、open、sdcard monitor
-- [ ] 对齐 Nova 的 `CONFIG_KSU_SUSFS` 扩展接口
-- 工作量大，**不建议新手**
+## P0：管理器 UI 授权（两个尾巴之一）
+- [ ] 静态：JADX 反编译 `SukiSU_Nova_v3.0.0_30000-release.apk`（Release v0.2.0-archive 有），定位 `10003` 与 `SET_APP_PROFILE` 守卫逻辑
+- [ ] 动态：`/sys/module/kernelsu/parameters/ksu_f10003` 遍历 1/2/3/2147483647，每档点一次授权
+- [ ] 看 strace：点授权时管理器到底有没有发 ioctl
+- [ ] 若缺命令：对照 main 树 uapi/supercall.h 补 handler
+- [ ] 若卡签名：放开内核侧签名校验
+- 详细过程：docs/FLOW.md 图 2
 
-## P3 扩展功能开关
-- [ ] KPM：`kpm_mode=on` 验证
-- [ ] CPU 身份伪装：确认 aarch64 4.19 下 `KSU_CAN_USE_CPU_SPOOF` 条件
-- [ ] Umount 路径 / 动态管理器 / 版本伪装：补对应特性
+## P1：文本白名单加载（两个尾巴之二）
+- [ ] 验证 8m v2 新路径（`/data/adb/ksu/ksu_uids.txt`）
+- [ ] 若仍 EACCES：override_creds / /data/local/tmp / sepolicy 三选一
+- 详细过程：docs/FLOW.md 图 3
 
-## P4 工程化
-- [ ] 把 workflow 里的补丁抽成 `patches/*.patch`，可 `git apply`
-- [ ] 提供 `boot.img` 一键打包脚本（mkbootimg 参数）
-- [ ] 增加 selftest：开机后自动跑功能表
+## P2：可选攻坚
+- [ ] 伪造内核版本号，观察 35106/41150 管理器的新协议调用面
+- [ ] SUSFS 2.x 移植到 4.19（周级，见 docs/PORTING.md）
+- [ ] KPM / CPU 伪装等扩展开关
+
+## P3：工程化收尾
+- [ ] 把 workflow 补丁抽成 `patches/*.patch`（git apply 版）
+- [ ] 一键打包 boot.img 脚本
+- [ ] 硬件 20 项测试清单归档（docs/HARDWARE-TEST.md）

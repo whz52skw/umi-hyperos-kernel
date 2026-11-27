@@ -1,3 +1,17 @@
+> ## ⛔ 项目状态：无期限停更（2026-11-28）
+>
+> 本项目的维护者因时间原因决定**暂停开发，全部推翻重来**。仓库所有内容保留，
+> 作为**完整交接档案**开放给任何人接手：
+>
+> - **做到哪了** → 见 [docs/HANDOVER.md](docs/HANDOVER.md)（交接全书）
+> - **卡在哪里** → [docs/STATUS.md](docs/STATUS.md)（逐项状态 + 日志证据）
+> - **接下来要做什么** → [docs/ROADMAP.md](docs/ROADMAP.md) + [docs/FLOW.md](docs/FLOW.md)（流程图）
+> - **所有工具** → [tools/](tools/)（一键诊断 / JADX 安装）
+> - **配套管理器 APK** → 见 Release **v0.2.0-archive**（SukiSU Nova 30000，官方渠道已绝版）
+>
+> 谁想接手：先读 [docs/HANDOVER.md](docs/HANDOVER.md) 的「30 分钟导读」，
+> 欢迎 fork + PR。唯一请求：继续的话请保留本段说明的来源信息。
+
 # Mi 10 (umi) HyperOS 自编译内核 + SukiSU Nova
 
 面向 **Xiaomi Mi 10 (umi) / HyperOS 1.0.7.0.TJBCNXM (Android 13) / 内核 4.19** 的自编译内核工程，
